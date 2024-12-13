@@ -6,7 +6,7 @@ tags:
   - provider/spacelift
 ---
 
-# Component: `spacelift`
+# Component: `spacelift-worker-pool-asg`
 
 This component is responsible for provisioning Spacelift worker pools.
 
