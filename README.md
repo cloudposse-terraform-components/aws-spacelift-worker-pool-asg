@@ -151,7 +151,7 @@ role. This is done by adding `iam_role_arn` from the output to the `trusted_role
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.9.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.9.0, < 6.0.0 |
 | <a name="requirement_cloudinit"></a> [cloudinit](#requirement\_cloudinit) | >= 2.2.0 |
 | <a name="requirement_spacelift"></a> [spacelift](#requirement\_spacelift) | >= 0.1.2 |
 
@@ -159,7 +159,7 @@ role. This is done by adding `iam_role_arn` from the output to the `trusted_role
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.9.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.9.0, < 6.0.0 |
 | <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | >= 2.2.0 |
 | <a name="provider_spacelift"></a> [spacelift](#provider\_spacelift) | >= 0.1.2 |
 
