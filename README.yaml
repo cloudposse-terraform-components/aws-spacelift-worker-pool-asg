@@ -110,9 +110,9 @@ references:
   - name: cloudposse/terraform-spacelift-cloud-infrastructure-automation
     description: Cloud Posse's related upstream component
     url: https://github.com/cloudposse/terraform-spacelift-cloud-infrastructure-automation
-  - name: cloudposse/terraform-aws-components (spacelift-worker-pool)
+  - name: cloudposse-terraform-components
     description: Cloud Posse's upstream component
-    url: https://github.com/cloudposse/terraform-aws-components/tree/main/modules/spacelift-worker-pool
+    url: https://github.com/orgs/cloudposse-terraform-components/repositories
 tags:
   - component/spacelift/worker-pool
   - layer/spacelift
