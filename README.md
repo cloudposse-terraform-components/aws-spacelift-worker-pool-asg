@@ -328,7 +328,7 @@ Check out these related projects.
 For additional context, refer to some of these links.
 
 - [cloudposse/terraform-spacelift-cloud-infrastructure-automation](https://github.com/cloudposse/terraform-spacelift-cloud-infrastructure-automation) - Cloud Posse's related upstream component
-- [cloudposse/terraform-aws-components (spacelift-worker-pool)](https://github.com/cloudposse/terraform-aws-components/tree/main/modules/spacelift-worker-pool) - Cloud Posse's upstream component
+- [cloudposse-terraform-components](https://github.com/orgs/cloudposse-terraform-components/repositories) - Cloud Posse's upstream component
 
 
 
