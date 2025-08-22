@@ -8,23 +8,16 @@ tags:
 
 # Component: `spacelift-worker-pool-asg`
 
-This component is responsible for provisioning Spacelift worker pools.
+This component provisions Spacelift worker pools on AWS using an Auto Scaling Group.
 
-By default, workers are given pull access to the configured ECR, permission to assume the `spacelift` team role in the
-identity account (although you must also configure the `spacelift` team in the identity account to allow the workers to
-assume the role via `trusted_role_arns`), and have the following AWS managed IAM policies attached:
+By default, workers are granted pull access to the configured ECR and permission to assume the `spacelift` team role in the identity account (ensure the `spacelift` team in the identity account allows this via `trusted_role_arns`). Workers also get these AWS managed IAM policies:
 
 - AmazonSSMManagedInstanceCore
 - AutoScalingReadOnlyAccess
 - AWSXRayDaemonWriteAccess
 - CloudWatchAgentServerPolicy
 
-Among other things, this allows workers with SSM agent installed to be accessed via SSM Session Manager.
-
-```bash
-aws ssm start-session --target <instance-id>
-```
-
+With SSM agent installed, workers can be accessed via SSM Session Manager.
 ## Usage
 
 **Stack Level**: Regional
@@ -80,39 +73,36 @@ components:
               volume_type: "gp2"
 ```
 
+To connect to a worker via SSM Session Manager, use:
+
+```bash
+aws ssm start-session --target <instance-id>
+```
+
 ### Impacts on billing
 
-While scaling the workload for Spacelift, keep in mind that each agent connection counts against your quota of
-self-hosted workers. The number of EC2 instances you have running is _not_ going to affect your Spacelift bill. As an
-example, if you had 3 EC2 instances in your Spacelift worker pool, and you configured `spacelift_agents_per_node` to be
-`3`, you would see your Spacelift bill report 9 agents being run. Take care while configuring the worker pool for your
-Spacelift infrastructure.
+While scaling the workload for Spacelift, keep in mind that each agent connection counts against your quota of self-hosted workers. The number of EC2 instances you have running is not going to affect your Spacelift bill. For example, if you had 3 EC2 instances in your Spacelift worker pool, and you configured `spacelift_agents_per_node` to be `3`, you would see your Spacelift bill report 9 agents being run. Take care while configuring the worker pool for your Spacelift infrastructure.
 
 ## Configuration
 
 ### Docker Image on ECR
 
-Build and tag a Docker image for this repository and push to ECR. Ensure the account where this component is deployed
-has read-only access to the ECR repository.
+Build and tag a Docker image for this repository and push to ECR. Ensure the account where this component is deployed has read-only access to the ECR repository.
 
 ### API Key
 
 Prior to deployment, the API key must exist in SSM. The key must have admin permissions.
 
-To generate the key, please follow
-[these instructions](https://docs.spacelift.io/integrations/api.html#spacelift-api-key-token). Once generated, write the
-API key ID and secret to the SSM key store at the following locations within the same AWS account and region where the
-Spacelift worker pool will reside.
+To generate the key, please follow [these instructions](https://docs.spacelift.io/integrations/api.html#spacelift-api-key-token). Once generated, write the API key ID and secret to the SSM key store at the following locations within the same AWS account and region where the Spacelift worker pool will reside.
 
 | Key     | SSM Path                | Type           |
 | ------- | ----------------------- | -------------- |
 | API ID  | `/spacelift/key_id`     | `SecureString` |
 | API Key | `/spacelift/key_secret` | `SecureString` |
 
-_HINT_: The API key ID is displayed as an upper-case, 16-character alphanumeric value next to the key name in the API
-key list.
+Hint: The API key ID is displayed as an upper-case, 16-character alphanumeric value next to the key name in the API key list.
 
-Save the keys using `chamber` using the correct profile for where Spacelift worker pool is provisioned
+Save the keys using `chamber` using the correct profile for where the Spacelift worker pool is provisioned:
 
 ```
 AWS_PROFILE=acme-gbl-auto-admin chamber write spacelift key_id 1234567890123456
@@ -121,12 +111,10 @@ AWS_PROFILE=acme-gbl-auto-admin chamber write spacelift key_secret abcdefghijklm
 
 ### IAM configuration
 
-After provisioning the component, you must give the created instance role permission to assume the Spacelift worker
-role. This is done by adding `iam_role_arn` from the output to the `trusted_role_arns` list for the `spacelift` role in
-`aws-teams`.
+After provisioning the component, you must give the created instance role permission to assume the Spacelift worker role. This is done by adding `iam_role_arn` from the output to the `trusted_role_arns` list for the `spacelift` role in `aws-teams`.
 
-<!-- prettier-ignore-start -->
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
@@ -269,14 +257,19 @@ role. This is done by adding `iam_role_arn` from the output to the `trusted_role
 | <a name="output_security_group_name"></a> [security\_group\_name](#output\_security\_group\_name) | Spacelift Security Group Name |
 | <a name="output_worker_pool_id"></a> [worker\_pool\_id](#output\_worker\_pool\_id) | Spacelift worker pool ID |
 | <a name="output_worker_pool_name"></a> [worker\_pool\_name](#output\_worker\_pool\_name) | Spacelift worker pool name |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-<!-- prettier-ignore-end -->
+<!-- markdownlint-restore -->
+
+
 
 ## References
 
-- [cloudposse/terraform-spacelift-cloud-infrastructure-automation](https://github.com/cloudposse/terraform-spacelift-cloud-infrastructure-automation) -
-  Cloud Posse's related upstream component
-- [cloudposse/terraform-aws-components](https://github.com/cloudposse/terraform-aws-components/tree/main/modules/spacelift-worker-pool) -
-  Cloud Posse's upstream component
+
+- [cloudposse/terraform-spacelift-cloud-infrastructure-automation](https://github.com/cloudposse/terraform-spacelift-cloud-infrastructure-automation) - Cloud Posse's related upstream component
+
+- [cloudposse/terraform-aws-components (spacelift-worker-pool)](https://github.com/cloudposse/terraform-aws-components/tree/main/modules/spacelift-worker-pool) - Cloud Posse's upstream component
+
+
+
 
 [<img src="https://cloudposse.com/logo-300x69.svg" height="32" align="right"/>](https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse-terraform-components/aws-spacelift-worker-pool-asg&utm_content=)
+
