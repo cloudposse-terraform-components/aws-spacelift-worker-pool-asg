@@ -266,7 +266,7 @@ After provisioning the component, you must give the created instance role permis
 
 - [cloudposse/terraform-spacelift-cloud-infrastructure-automation](https://github.com/cloudposse/terraform-spacelift-cloud-infrastructure-automation) - Cloud Posse's related upstream component
 
-- [cloudposse/terraform-aws-components (spacelift-worker-pool)](https://github.com/cloudposse/terraform-aws-components/tree/main/modules/spacelift-worker-pool) - Cloud Posse's upstream component
+- [cloudposse-terraform-components](https://github.com/orgs/cloudposse-terraform-components/repositories) - Cloud Posse's upstream component
 
 
 
